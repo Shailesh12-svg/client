@@ -1,36 +1,55 @@
-import React from 'react';
-import { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import "./login.css";
+
 const Login = () => {
-    const [, setRedirectToSignup] = useState(null); // State variable to store the callback
-    const [,setRedirectToHomepage]=useState(null);
+  //Creating States
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const token = sessionStorage.getItem("token");
+  console.log("This is your token", token);
 
-  // Define a callback function to redirect to the signup page
-  const handleSignUp= useCallback(() => {
-    setRedirectToSignup(() => {
-      window.location.href = '/signup'; // Redirect using window.location.href
-    });
-  }, []);
+  const handleClick = () => {
+    const opts = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json' // Specify JSON content type
+      },
+      body: JSON.stringify({
+        "email": email,
+        "password": password
+      })
+    };
 
+    fetch("http://127.0.0.1:5000/token", opts)
+      .then(resp => {
+        if (resp.status === 200) return resp.json();
+        else alert("There was an error!!!");
+      })
+      .then(data => {
+        console.log("This came from backend", data);
+        sessionStorage.setItem("token", data.access_token);
+      })
+      .catch(error => {
+        console.error("There was an error", error);
+      });
+  };
 
-  const handleLogin= useCallback(() => {
-    setRedirectToHomepage(() => {
-      window.location.href = '/homepage'; // Redirect using window.location.href
-    });
-  }, []);
   return (
     <div className='Login'>
-        <form>
-            <h1>Login</h1>
-            <label for="femail" name="email" id="femail">Email:</label>
-            <input type='email' name="email" id="femail"/><br/>
-            <label for="femail" name="passwd" id="fpasswd">Password:</label>
-            <input type='password' name="passwd" id="fpasswd"/><br/>
-            <button type='submit' onClick={handleLogin}>LogIn</button>
-            <button type="button" onClick={handleSignUp}>SignUp</button>
+      {!token ? (
+        <form className='form'>
+          <h1>Login</h1>
+          <label htmlFor="femail" name="email" id="femail">Email:</label>
+          <input type='text' name="email" id="femail" value={email} onChange={(e) => setEmail(e.target.value)} /><br />
+          <label htmlFor="fpasswd" name="passwd" id="fpasswd">Password:</label>
+          <input type='password' name="passwd" id="fpasswd" onChange={(e) => setPassword(e.target.value)} value={password} /><br />
+          <button type="button" onClick={handleClick}>LogIn</button>
         </form>
+      ) : (
+        <p>You are logged in with this token: {token}</p>
+      )}
     </div>
-  )
+  );
 }
 
 export default Login;
