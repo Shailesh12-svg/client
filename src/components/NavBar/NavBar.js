@@ -33,8 +33,10 @@ function Navbar() {
           <NavbarLinkContainer>
             <NavbarLink to="/homepage"> Home</NavbarLink>
             <NavbarLink to="/machine"> Analyser</NavbarLink>
+            
             <NavbarLink to="/about"> About</NavbarLink>
             <NavbarLink to="/contact"> Contributors</NavbarLink>
+            
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);

@@ -6,6 +6,7 @@ import Homepage from "./components/Homepage/Homepage";
 import Machine from "./components/Machine/Machine";
 import About from "./components/About/About";
 import Contact from "./components/Contributors/Contributors";
+import Data from "./components/Data-Visuals/Data";
 const appRouter =createBrowserRouter([
   {
   path:'/',
@@ -30,7 +31,12 @@ const appRouter =createBrowserRouter([
   {
     path:'/contact',
     element:<Contact/>
+  },
+  {
+    path:'/data',
+    element:<Data/>
   }
+
 
 ]);
 

@@ -29,6 +29,9 @@ const PredictWaterQuality = () => {
     setFormData({ ...formData, [name]: parseFloat(value) });
   };
 
+  const handleData =()=>{
+    window.location.href="./data"
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -203,6 +206,7 @@ const PredictWaterQuality = () => {
           </Col>
         </Row>
         <Button type="submit">Predict Water Quality</Button>
+        <Button type="button" onClick={handleData}>Data-Visualization</Button>
       </Form> 
       {predictionResult && (
           <div>

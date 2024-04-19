@@ -6,7 +6,9 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  
+  function signup(){
+    window.location.href ='/signup';
+  }
 
    async function handleClick(){
     const opts = {
@@ -51,6 +53,7 @@ const Login = () => {
           <label htmlFor="fpasswd" name="passwd" id="fpasswd">Password:</label>
           <input type='password' name="passwd" id="fpasswd" onChange={(e) => setPassword(e.target.value)} value={password} /><br />
           <button type="button" onClick={handleClick}>LogIn</button>
+          <button type="button" onClick ={signup}>SignUp</button>
         </form>
     </div>
   );
