@@ -5,38 +5,45 @@ const Login = () => {
   //Creating States
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const token = sessionStorage.getItem("token");
-  console.log("This is your token", token);
+  
+  
 
-  const handleClick = () => {
+   async function handleClick(){
     const opts = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json' // Specify JSON content type
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         "email": email,
         "password": password
       })
     };
-
-    fetch("http://127.0.0.1:5000/token", opts)
+    
+    console.log('Request options:', opts);
+  
+     await fetch("http://127.0.0.1:5000/token", opts)
       .then(resp => {
-        if (resp.status === 200) return resp.json();
-        else alert("There was an error!!!");
+        console.log('Response status:', resp.status);
+        return resp.json();
       })
       .then(data => {
-        console.log("This came from backend", data);
-        sessionStorage.setItem("token", data.access_token);
+        console.log('Data from backend:', data);
+        if (data && data.access_token) {
+          sessionStorage.setItem("token", data.access_token);
+          alert('Login succesful')
+          window.location.href ='/homepage'
+        } else {
+          throw new Error("Invalid response format: missing access_token");
+        }
       })
       .catch(error => {
         console.error("There was an error", error);
       });
   };
-
+  
   return (
     <div className='Login'>
-      {!token ? (
         <form className='form'>
           <h1>Login</h1>
           <label htmlFor="femail" name="email" id="femail">Email:</label>
@@ -45,9 +52,6 @@ const Login = () => {
           <input type='password' name="passwd" id="fpasswd" onChange={(e) => setPassword(e.target.value)} value={password} /><br />
           <button type="button" onClick={handleClick}>LogIn</button>
         </form>
-      ) : (
-        <p>You are logged in with this token: {token}</p>
-      )}
     </div>
   );
 }

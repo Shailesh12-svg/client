@@ -1,0 +1,31 @@
+.persons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .person-card {
+    width: 200px;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .person-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .person-card h2 {
+    margin-bottom: 5px;
+  }
+  
+  .person-card p {
+    font-size: 14px;
+    color: #555;
+  }
+  

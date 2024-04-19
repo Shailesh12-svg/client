@@ -1,0 +1,22 @@
+.input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-label {
+    margin-right: 8px; /* Adjust margin as needed */
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-field {
+    margin-right: 8px; /* Adjust margin as needed */
+  }
+  
+  .button-group {
+    display: flex;
+  }
+  

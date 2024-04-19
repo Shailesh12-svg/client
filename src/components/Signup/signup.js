@@ -1,80 +1,45 @@
 import React, { useState } from 'react';
- import './signup.css'; // Assuming login.css contains both login and signup styles
+import axios from 'axios';
 
-const Signup = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+function Register() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission
+    const handleRegister = async () => {
+        try {
+            const response = await axios.post('http://your-backend-url/register', {
+                email: email,
+                password: password
+            });
+            setMessage(response.data.msg);
+            // Clear the form fields after successful registration
+            setEmail('');
+            setPassword('');
+        } catch (error) {
+            if (error.response) {
+                setMessage(error.response.data.msg);
+            } else {
+                setMessage('An error occurred. Please try again later.');
+            }
+        }
+    };
 
-    // Basic validation (replace with more robust validation)
-    if (!name || !email || !password || !confirmPassword) {
-      alert('Please fill in all required fields.');
-      return;
-    }
+    return (
+        <div>
+            <h2>Register</h2>
+            <div>
+                <label>Email:</label>
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div>
+                <label>Password:</label>
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <button onClick={handleRegister}>Register</button>
+            {message && <p>{message}</p>}
+        </div>
+    );
+}
 
-    if (password !== confirmPassword) {
-      alert('Passwords do not match.');
-      return;
-    }
-
-    // Simulate sending data (replace with actual logic)
-    console.log('Sending signup data:', { name, email, password });
-
-    // Clear form after successful signup (optional)
-    setName('');
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-  };
-
-  return (
-    <div className="Signup">
-      <form id="signup-form" onSubmit={handleSubmit}>
-        <h1>Sign Up</h1>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <label htmlFor="confirm-password">Confirm Password</label>
-        <input
-          type="password"
-          id="confirm-password"
-          name="confirm-password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
-  );
-};
-
-export default Signup;
+export default Register;
