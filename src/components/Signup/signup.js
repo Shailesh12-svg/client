@@ -24,7 +24,7 @@ const SignUp = () => {
       })
     };
     
-    await fetch("http://127.0.0.1:5000/register", opts)
+    await fetch("server-weld-two-29.vercel.app/register", opts)
       .then(resp => {
         if (!resp.ok) {
           throw new Error('Failed to register');
