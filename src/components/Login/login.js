@@ -24,7 +24,7 @@ const Login = () => {
     
     console.log('Request options:', opts);
   
-     await fetch("server-weld-two-29.vercel.app/token", opts)
+     await fetch("https://server-weld-two-29.vercel.app/token", opts)
       .then(resp => {
         console.log('Response status:', resp.status);
         return resp.json();
